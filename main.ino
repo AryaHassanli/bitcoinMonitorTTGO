@@ -27,6 +27,9 @@ using namespace std;
 #define BUTTON_1 35
 #define BUTTON_2 0
 
+char ssid[20]="MyFi";
+char pass[20]="1375/04/03";
+
 TFT_eSPI tft = TFT_eSPI(135, 240);
 
 void espDelay(int ms)
@@ -40,7 +43,7 @@ void waitForConnection()
 {
     tft.fillScreen(TFT_BLACK);
     tft.setTextSize(1);
-    WiFi.begin("MyFi", "1375/04/03");
+    WiFi.begin(ssid, pass);
     while (WiFi.status() != WL_CONNECTED)
     {
         tft.setTextSize(2);
@@ -76,9 +79,9 @@ void setup()
     tft.setTextSize(1);
 
     if (TFT_BL > 0)
-    {                                           // TFT_BL has been set in the TFT_eSPI library in the User Setup file TTGO_T_Display.h
-        pinMode(TFT_BL, OUTPUT);                // Set backlight pin to output mode
-        digitalWrite(TFT_BL, TFT_BACKLIGHT_ON); // Turn backlight on. TFT_BACKLIGHT_ON has been set in the TFT_eSPI library in the User Setup file TTGO_T_Display.h
+    {                                           
+        pinMode(TFT_BL, OUTPUT);                
+        digitalWrite(TFT_BL, TFT_BACKLIGHT_ON); 
     }
 
     tft.setSwapBytes(true);
@@ -120,7 +123,7 @@ void loop()
             Serial.print("Error on sending POST: ");
             Serial.println(httpResponseCode);
         }
-        http.end(); //Free resources
+        http.end();
     }
     else
     {
